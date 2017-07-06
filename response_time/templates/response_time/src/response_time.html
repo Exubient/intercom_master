@@ -1,0 +1,29 @@
+
+{% extends 'response_time/src/base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="jumbotron">
+        <h1>Response Time</h1>
+        <p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.</p>
+        <form action="" method="POST">
+              {% csrf_token %}
+	        <input name=crawl>
+	        <button type=submit>Submit</button>
+        </form>
+			{% for key, value in crawl_list %}
+				{% if value.average_rt != 0 %}
+					<h3>Admin Name: {{value.name}}</h3>
+					<p>Convo Count: {{value.convo_count}}</p>
+					<p>Real Count: {{value.average_count}}</p>
+					<p>First Response Time: {{value.first_rt}}</p>
+					<p>Averate Response Time: {{value.average_rt}}</p>
+					<p>Median Response Time: {{value.median_rt}}</p>
+				{% endif %}		
+			{% endfor %}
+    </div>
+</div>
+
+{% endblock %}

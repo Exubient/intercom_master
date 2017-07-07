@@ -21,7 +21,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.root, name="root"),
     url(r'^response_time/$', views.response_time, name="response_time"),
-    url(r'^response_time_admin/$', views.response_time_admin, name="response_time_admin"),
     url(r'^start_hour/$', views.start_hour, name="start_hour"),
     url(r'^long_convo/$', views.long_convo, name="long_convo"),
     url(r'^users/$', views.users, name="users"),

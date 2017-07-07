@@ -39,13 +39,11 @@ $(document).ready(function(){
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Miso_Intercom</a>
+      <a class="navbar-brand" href="{% url 'root' %}">Miso_Intercom</a>
     </div>
 
     <ul class="nav navbar-nav nav-tabs">
-      <li><a href="{% url 'root' %}">Home</a></li>
       <li><a href="{% url 'response_time' %}">Response Time</a></li>
-      <li><a href="{% url 'response_time_admin' %}">Response Time per Admin</a></li>
       <li><a href="{% url 'start_hour' %}">Start Hour </a></li>
       <li><a href="{% url 'long_convo' %}">View Conversation</a></li>
       <li><a href="{% url 'users' %}">Inbound Users</a></li>

@@ -6,8 +6,40 @@
 
 <div class="container">
     <div class="jumbotron">
-        <h1>Long Convo</h1>
+        <h1>View Conversations</h1>
         <p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.</p>
+        <form action="" method="POST">
+              {% csrf_token %}
+	        <div>Number of Crawl: {{crawl}}</div> 
+            <input name=crawl><br>
+            <div>Number of View: {{view}}</div>
+            <input name=view><br>
+	        <button type=submit>Submit</button>
+        </form>
+        {% for key, item in text %}
+            <h3>{{key}}</h3>
+                {% for value in item%}
+                    {% if value.type %}
+                        <div>Author: {{value.author}}</div>
+                        <div>Created_at: {{value.created_at}}</div>
+                        <div>Body: {{value.body}}</div>
+                        <br>
+                    {% else %}
+                        <!-- <div style="position:relative; left:50px;">Author: {{value.author}}</div>
+                        <div style="position:relative; left:50px;">Created_at: {{value.created_at}}</div>
+                        <div style="position:relative; left:50px;">Body: {{value.body}}</div>
+                        <br> -->
+                        <div>Author: {{value.author}}</div>
+                        <div>Created_at: {{value.created_at}}</div>
+                        <div>Body: {{value.body}}</div>
+                        <br>
+                    {% endif %}
+                {% endfor %}
+        {% endfor %}    
+
+
+
+
     </div>
 </div>
 

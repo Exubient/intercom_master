@@ -46,7 +46,7 @@ def count_create(dict):
 ####################################################
 
 # admin_office = {}
-def admin_officehour():
+def admin_officehour(admin_office):
 	for admin in intercom.admins.all():
 		admin_office[admin.id] = AdminHour(name = admin.name, start = 0, end = 0, array=[])
 
@@ -61,7 +61,7 @@ def crawl_convo(array, crawl_size):
 			break
 
 # recent_user =[]
-def crawl_user(crawl_size):
+def crawl_user(crawl_size, recent_user):
 	for user in intercom.users.find_all():
 		if len(recent_user) < crawl_size:
 			recent_user.append(user.id)
@@ -72,11 +72,9 @@ def crawl_user(crawl_size):
 
 # name_dict={}
 # admin_convo = {}
-def admin_ls(nombre, crawl_size):
+def admin_ls(nombre, crawl_size, admin_convo):
 	for admin in intercom.admins.all():
 		if admin.name == nombre:
-			print(admin.name)
-			name_dict[admin.name] = admin.id
 			ls=[]
 			for convo in intercom.conversations.find_all(type="admin", admin_id=admin.id):
 				if (len(ls)< crawl_size):
@@ -130,6 +128,15 @@ class Conversation_part():
 		else:
 			self.body = "NONE"
 
+class LongConvo_part():
+	def __init__(self, id, author, created_at, body, admin_count):
+		self.id = id
+		self.author = name(author, admin_count)
+		self.created_at = restamp(localize(created_at))
+		if type(body) != NoneType:
+			self.body = BeautifulSoup(body, "html5lib").get_text()
+		else:
+			self.body = "NONE"
 class Admin():
 	def __init__(self, name, first_time, first_count, first_rt, array, average_time, average_count, average_rt, convo_count, median_rt):
 		self.name = name
@@ -166,7 +173,7 @@ class Date():
 
 ####################################################
 
-def name(data):
+def name(data, admin_count):
 	if isUser(data):
 		return "SOME USER"
 	elif isAdmin(data):

@@ -4,6 +4,7 @@ from root import *
 def run_long(crawl_size, show_num):
 	####################################
 	recent_convo =[]
+	admin_count={}
 	crawl_convo(recent_convo, crawl_size)
 	count_create(admin_count)
 	####################################
@@ -29,7 +30,11 @@ def run_long(crawl_size, show_num):
 	for index in range(show_num):
 		tag = "Conversation [" + str(index) +"] Len: " + str(long_ls[index].length)
 		for x in range(len(long_ls[index].parts)):
-			container.append(LongConvo_part(id = long_ls[index].parts[x].id, author = long_ls[index].parts[x].author, created_at = long_ls[index].parts[x].created_at, body = long_ls[index].parts[x].body))
+			try:
+				classPart = LongConvo_part(id = long_ls[index].parts[x].id, author = long_ls[index].parts[x].author, created_at = long_ls[index].parts[x].created_at, body = long_ls[index].parts[x].body, admin_count= admin_count)
+				container.append(classPart)
+			except:
+				pass
 		text[tag] = container
 	return text
 

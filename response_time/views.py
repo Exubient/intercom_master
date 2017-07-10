@@ -1,5 +1,8 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
+
+from response_time.models import AdminTable
+
 from root import *
 from time_response import run_response
 from long_convo import run_long
@@ -26,7 +29,7 @@ def response_time(request):
 		crawl_dict = run_response(crawl)
 
 		return render(request, "response_time/src/response_time.html",{
-				"crawl_list" : crawl_dict.items(),
+				# "crawl_list" : crawl_dict.items(),
 			})
 
 

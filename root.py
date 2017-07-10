@@ -4,6 +4,8 @@ import datetime
 import inspect
 from bs4 import BeautifulSoup
 import os
+from response_time.models import AdminTable, usedConvo
+
 
 ####################################################
 python_start=time.time()
@@ -35,13 +37,6 @@ def sleep():
 start_time = stamp(restamp(time.time())[:-8] + "6:0:0")
 start_day = stamp(restamp(time.time())[:-8] + "0:0:0")
 
-####################################################
-
-
-# admin_count = {}
-def count_create(dict):
-	for admin in intercom.admins.all():
-		dict[admin.id] = Admin(name = admin.name, first_count = 0, first_rt = 0, first_time =0, average_count = 0, average_time = 0, average_rt = 0, array=[], convo_count=0, median_rt =0)
 
 ####################################################
 
@@ -173,13 +168,14 @@ class Date():
 
 ####################################################
 
-def name(data, admin_count):
-	if isUser(data):
-		return "SOME USER"
-	elif isAdmin(data):
-		return admin_count[data.id].name
-	else:
-		return "ERROR NAME"
+# def name(data, admin_count):
+# 	try:
+# 		if isUser(data):
+# 			return "SOME USER"
+# 		elif isAdmin(data):
+# 			return admin_count[data.id].name
+# 	except:
+# 			return "NAME ERROR"
 
 def send_response(dict):
 	text=""	
@@ -205,41 +201,10 @@ def send_response(dict):
 					"\n____________________\n"
 	return text
 
-####################################################
-def send_email(body, recipient, file_name, crawl_size):
-	import smtplib
-	from email.mime.text import MIMEText
-	from email.mime.multipart import MIMEMultipart
 
-	gmail_user = 'hyunjoong@getmiso.com' 
-	gmail_pw = 'qwert6311' 
-	from_addr = 'hyunjoong@getmiso.com' 
-	
-	if recipient == "doy":
-		to_addr = "doy@getmiso.com"
-	elif recipient == "donna":
-		to_addr = "donna@getmiso.com"
-	elif recipient == "gh":
-		to_addr = "gyeongho@getmiso.com"
-	elif recipient == "victor":
-		to_addr = "victor@getmiso.com"
-	else:
-		to_addr = "hyunjoong@getmiso.com"
-	
-	msg=MIMEMultipart('alternative') 
-	msg['From'] = from_addr 
-	msg['To'] = to_addr 
-	msg['Subject'] = 'Intercom[' + str(crawl_size) + '] ' + file_name
-	msg.attach(MIMEText(body, 'plain', 'utf-8')) 
 
-	try: 
-		server = smtplib.SMTP("smtp.gmail.com", 587) 
-		server.ehlo() 
-		server.starttls() 
-		server.login(gmail_user, gmail_pw) 
-		server.sendmail(from_addr, to_addr, msg.as_string()) 
-		server.quit() 
-		print('successfully sent the mail') 
-	except BaseException as e: 
-		print("failed to send mail", str(e))
+
+
+
+
 

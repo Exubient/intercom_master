@@ -2,20 +2,34 @@ from django.db import models
 
 # Create your models here.
 
-class Admin(models.Model):
-	id = models.TextField(primary_key = True)
-	name = models.TextField()
+class AdminTable(models.Model):
+	id = models.CharField(max_length=30, primary_key = True)
+	adminName = models.CharField(max_length=30)
 
-	first_time = models.FloatField()
-	first_count = models.FloatField()
-	first_rt = models.FloatField()
+	convoCount = models.FloatField(default = 0)
 
-	average_time = models.FloatField()
-	average_count = models.FloatField()
-	averate_rt = models.FloatField()
-	convo_count  = models.FloatField()
+	realCount = models.FloatField(default = 0)
+	firstCount = models.FloatField(default =0)
 
-	array = models.TextField()
+	firstResponseSum = models.FloatField(default = 0)
+	averageResponseSum = models.FloatField(default = 0)
+
+	medianResponseSum = models.FloatField(default = 0)
+
+	firstResponse = models.FloatField(default=0)
+	averageResponse = models.FloatField(default=0)
+	medianResponse = models.FloatField(default=0)
+
+	# startTime = models.DateTimeField()
+	# endTime = models.DateTimeField()
+
+
+class usedConvo(models.Model):
+	id = models.CharField(max_length = 10, primary_key = True)
+	author = models.CharField(max_length = 100, null=True)
+	created_at = models.IntegerField()
+	body = models.TextField()
+
 
 class Conversation(models.Model):
 	id = models.TextField(primary_key = True)
@@ -31,11 +45,11 @@ class Conversation_part(models.Model):
 	created_at = models.IntegerField()
 	body = models.TextField()
 
-class AdminHour(models.Model):
-	name = models.TextField()
-	start = models.IntegerField()
-	end = models.IntegerField()
-	array = models.TextField()
+class LongConvo_part(models.Model):
+	id = models.TextField(primary_key = True)
+	author = models.TextField()
+	created_at = models.IntegerField()
+	body = models.TextField()
 
 class User(models.Model):
 	id = models.TextField(primary_key = True)

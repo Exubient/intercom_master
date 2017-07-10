@@ -13,6 +13,15 @@
 	        <input name=crawl>
 	        <button type=submit>Submit</button>
         </form>
+        	{{test.id}}
+        	{{test.adminName}}
+        	{{test.convoCount}}
+        	{{test.realCount}}
+        	{{test.firstReponse}}
+        	{{test.averageResponse}}
+        	{{test.medianResponse}}
+
+
 			{% for key, value in crawl_list %}
 				{% if value.average_rt != 0 %}
 					<h3>Admin Name: {{value.name}}</h3>

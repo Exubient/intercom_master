@@ -28,6 +28,8 @@ def response_time(request):
 		except:
 			pass
 		crawl_dict = run_response(crawl)
+		print("export______")
+		export()
 		
 
 		return render(request, "response_time/src/response_time.html",{

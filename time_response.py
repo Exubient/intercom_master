@@ -38,7 +38,7 @@ def run_response(crawl_size):
 				if isUser(classParts.author):
 					user_response = classParts.created_at
 					continue
-					
+
 				if classParts.partType =="note":
 					continue
 
@@ -62,10 +62,6 @@ def run_response(crawl_size):
 								tmpAdmin.firstCount += 1
 								first_add = False
 
-							if ((tmpAdmin.realCount != 0) and (tmpAdmin.firstCount != 0)):
-								tmpAdmin.firstResponse = tmpAdmin.firstResponseSum / tmpAdmin.firstCount
-								tmpAdmin.averageResponse = tmpAdmin.averageResponseSum / tmpAdmin.realCount
-								tmpAdmin.medianResponse = 0
 					tmpAdmin.save()
 				else:
 					print("no admin")

@@ -5,7 +5,7 @@ from django.contrib import admin
 from .models import AdminTable, Conversation, Conversation_part, User, Date, usedConvo, medianTable
 
 class _AdminTable(admin.ModelAdmin):
-    list_display = ['id','adminName', "convoCount", "realCount", "averageResponseSum", "firstCount", "firstResponseSum", "medianResponseSum"]
+    list_display = ['adminName', "convoCount", "realCount", "averageResponseSum", "averageResponse", "firstCount", "firstResponseSum", "firstResponse", "medianResponse"]
 
 
 class _usedConvo(admin.ModelAdmin):

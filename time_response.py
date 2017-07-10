@@ -1,5 +1,5 @@
 from root import *
-from response_time.models import AdminTable, usedConvo
+from response_time.models import AdminTable, usedConvo, medianTable
 
 def name(data):
 	if isUser(data):
@@ -9,6 +9,8 @@ def name(data):
 	elif AdminTable.objects.filter(id = data.id).exists():
 		name = AdminTable.objects.get(id = data.id)
 		return name.adminName
+def getComment(data):
+	return 
 
 def run_response(crawl_size):
 
@@ -24,29 +26,34 @@ def run_response(crawl_size):
 
 		first_add = True
 		for x in range(len(classConvo.parts)):
-			classParts = Conversation_part(id = classConvo.parts[x].id, author = classConvo.parts[x].author, created_at = classConvo.parts[x].created_at, body = classConvo.parts[x].body)
+			classParts = Conversation_part(id = classConvo.parts[x].id, author = classConvo.parts[x].author, created_at = classConvo.parts[x].created_at, body = classConvo.parts[x].body, partType = classConvo.parts[x].part_type)
 			if usedConvo.objects.filter(id = classParts.id).exists():
 				print("----------- 존재하는 대화 -----------")
 				continue
 			else:
 				#Save to postgres DB
-				convoSave = usedConvo(id = classParts.id, author = name(classParts.author), created_at = classParts.created_at, body = classParts.body)
+				convoSave = usedConvo(id = classParts.id, author = name(classParts.author), created_at = classParts.created_at, body = classParts.body, partType = classParts.partType)
 				convoSave.save()
 
 				if isUser(classParts.author):
 					user_response = classParts.created_at
 					continue
 					
+				if classParts.partType =="note":
+					continue
+
 				if AdminTable.objects.filter(id = classParts.author.id).exists():
 					tmpAdmin = AdminTable.objects.get(id = classParts.author.id)
 					if isAdmin(classParts.author):
 						tmpAdmin.convoCount += 1
 
-						if (x > 0 and isUser(classConvo.parts[x-1].author)):
+						if (isUser(classConvo.parts[x-1].author)):
 							admin_response = classParts.created_at
-
 							tmpAdmin.averageResponseSum += admin_response - user_response
 							tmpAdmin.realCount += 1
+
+							medianSave = medianTable(adminLink = tmpAdmin, responseTime = admin_response - user_response)
+							medianSave.save()
 
 							# admin_count[classParts.author.id].array.append(admin_response - user_response)
 					
@@ -58,7 +65,7 @@ def run_response(crawl_size):
 							if ((tmpAdmin.realCount != 0) and (tmpAdmin.firstCount != 0)):
 								tmpAdmin.firstResponse = tmpAdmin.firstResponseSum / tmpAdmin.firstCount
 								tmpAdmin.averageResponse = tmpAdmin.averageResponseSum / tmpAdmin.realCount
-								tmpAdmin.medianResponse = 11301130
+								tmpAdmin.medianResponse = 0
 					tmpAdmin.save()
 				else:
 					print("no admin")

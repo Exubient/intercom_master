@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 
 from response_time.models import AdminTable
+from response_time.models import medianTable
 
 from root import *
 from time_response import run_response
@@ -27,6 +28,7 @@ def response_time(request):
 		except:
 			pass
 		crawl_dict = run_response(crawl)
+		
 
 		return render(request, "response_time/src/response_time.html",{
 				# "crawl_list" : crawl_dict.items(),

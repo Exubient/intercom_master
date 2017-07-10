@@ -114,10 +114,11 @@ class Conversation():
 		self.length = len(parts)
 
 class Conversation_part():
-	def __init__(self, id, author, created_at, body):
+	def __init__(self, id, author, created_at, body, partType):
 		self.id = id
 		self.author = author
 		self.created_at = localize(created_at)
+		self.partType = partType
 		if type(body) != NoneType:
 			self.body = BeautifulSoup(body, "html5lib").get_text()
 		else:

@@ -20,8 +20,16 @@ from response_time import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.root, name="root"),
-    url(r'^response_time/$', views.response_time, name="response_time"),
-    url(r'^start_hour/$', views.start_hour, name="start_hour"),
+    
+    url(r'^response_time/team$', views.response_team, name="rt_team"),
+    url(r'^response_time/teammate$', views.response_teammate, name="rt_teammate"),
+    url(r'^response_time/weekly$', views.response_weekly, name="rt_weekly"),
+
+    url(r'^start_hour/team$', views.start_team, name="start_team"),
+    url(r'^start_hour/teammate$', views.start_teammate, name="start_teammate"),
+
+    url(r'^users/weekly$', views.users_weekly, name="users_weekly"),
+    url(r'^users/hourly$', views.users_hourly, name="users_hourly"),
+
     url(r'^long_convo/$', views.long_convo, name="long_convo"),
-    url(r'^users/$', views.users, name="users"),
 ]

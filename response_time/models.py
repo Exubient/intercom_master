@@ -6,20 +6,19 @@ class AdminTable(models.Model):
 	id = models.CharField(max_length=30, primary_key = True)
 	adminName = models.CharField(max_length=30)
 
-	convoCount = models.FloatField(default = 0)
+	convoCount = models.IntegerField(default = 0)
 
-	realCount = models.FloatField(default = 0)
-	averageResponseSum = models.FloatField(default = 0)
+	realCount = models.IntegerField(default = 0)
+	averageResponseSum = models.IntegerField(default = 0)
 
-	firstCount = models.FloatField(default =0)
-	firstResponseSum = models.FloatField(default = 0)
+	firstCount = models.IntegerField(default =0)
+	firstResponseSum = models.IntegerField(default = 0)
 
-	array = models.TextField(blank=True)
-	medianResponseSum = models.FloatField(default = 0)
+	medianResponseSum = models.IntegerField(default = 0)
 
-	firstResponse = models.FloatField(default=0)
-	averageResponse = models.FloatField(default=0)
-	medianResponse = models.FloatField(default=0)
+	firstResponse = models.IntegerField(default=0)
+	averageResponse = models.IntegerField(default=0)
+	medianResponse = models.IntegerField(default=0)
 
 	def __str__(self):
 		return self.adminName
@@ -29,7 +28,7 @@ class AdminTable(models.Model):
 
 class medianTable(models.Model):
 	adminLink = models.ForeignKey(AdminTable, on_delete=models.CASCADE, null=True)
-	responseTime = models.FloatField(default=0)
+	responseTime = models.IntegerField(default=0)
 
 class usedConvo(models.Model):
 	id = models.CharField(max_length = 10, primary_key = True)

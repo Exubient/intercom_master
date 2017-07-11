@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 from response_time.models import AdminTable
 from response_time.models import medianTable
@@ -27,13 +28,15 @@ def response_time(request):
 			crawl = int(request.POST.get("crawl"))
 		except:
 			pass
-		crawl_dict = run_response(crawl)
-		print("export______")
+		run_response(crawl)
 		export()
-		
+		adminObject=[]
+		for admin in AdminTable.objects.filter(~Q(firstCount=0)).filter(~Q(realCount=0)):
+			adminObject.append(admin)
+		print(adminObject)
 
 		return render(request, "response_time/src/response_time.html",{
-				# "crawl_list" : crawl_dict.items(),
+				"adminObject" : adminObject,
 			})
 
 

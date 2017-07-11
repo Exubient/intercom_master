@@ -9,8 +9,24 @@ def name(data):
 	elif AdminTable.objects.filter(id = data.id).exists():
 		name = AdminTable.objects.get(id = data.id)
 		return name.adminName
-def getComment(data):
-	return 
+
+def saveConvo(classParts):
+	convoSave = usedConvo(id = classParts.id, author = name(classParts.author), created_at = classParts.created_at, body = classParts.body, partType = classParts.partType)
+	convoSave.save()
+
+def saveMedian(tmpAdmin, admin_response, user_response):
+	medianSave = medianTable(adminLink = tmpAdmin, responseTime = admin_response - user_response)
+	medianSave.save()
+
+def ConvoCreate(convo_id):
+	convo = intercom.conversations.find(id=convo_id)
+	return Conversation(id = convo.id, created_at = convo.created_at, updated_at = convo.updated_at, author = convo.conversation_message.author, parts = convo.conversation_parts)
+
+def PartCreate(classConvo, x):
+	return Conversation_part(id = classConvo.parts[x].id, author = classConvo.parts[x].author, created_at = classConvo.parts[x].created_at, body = classConvo.parts[x].body, partType = classConvo.parts[x].part_type)
+
+def partExist(classParts):
+	return usedConvo.objects.filter(id = classParts.id).exists()
 
 def run_response(crawl_size):
 
@@ -21,77 +37,49 @@ def run_response(crawl_size):
 	####################################
 
 	for convo_id in recent_convo:
-		convo = intercom.conversations.find(id=convo_id)
-		classConvo = Conversation(id = convo.id, created_at = convo.created_at, updated_at = convo.updated_at, author = convo.conversation_message.author, parts = convo.conversation_parts)
+		classConvo = ConvoCreate(convo_id)
 
 		first_add = True
-		for x in range(len(classConvo.parts)):
-			classParts = Conversation_part(id = classConvo.parts[x].id, author = classConvo.parts[x].author, created_at = classConvo.parts[x].created_at, body = classConvo.parts[x].body, partType = classConvo.parts[x].part_type)
-			if usedConvo.objects.filter(id = classParts.id).exists():
-				print("----------- 존재하는 대화 -----------")
+		user_start = False
+		for index in range(len(classConvo.parts)):
+			classParts = PartCreate(classConvo, index)
+
+			if partExist(classParts):
 				continue
 			else:
-				#Save to postgres DB
-				convoSave = usedConvo(id = classParts.id, author = name(classParts.author), created_at = classParts.created_at, body = classParts.body, partType = classParts.partType)
-				convoSave.save()
+				saveConvo(classParts)
 
 				if isUser(classParts.author):
 					user_response = classParts.created_at
+					user_start = True
 					continue
+				if user_start:
+					if classParts.partType =="note":
+						continue
 
-				if classParts.partType =="note":
-					continue
-
-				if AdminTable.objects.filter(id = classParts.author.id).exists():
-					tmpAdmin = AdminTable.objects.get(id = classParts.author.id)
-					if isAdmin(classParts.author):
-						tmpAdmin.convoCount += 1
-
-						if (isUser(classConvo.parts[x-1].author)):
-							admin_response = classParts.created_at
-							tmpAdmin.averageResponseSum += admin_response - user_response
-							tmpAdmin.realCount += 1
-
-							medianSave = medianTable(adminLink = tmpAdmin, responseTime = admin_response - user_response)
-							medianSave.save()
-
-							# admin_count[classParts.author.id].array.append(admin_response - user_response)
-					
-							if first_add:
-								tmpAdmin.firstResponseSum += admin_response - user_response
-								tmpAdmin.firstCount += 1
-								first_add = False
-
-					tmpAdmin.save()
+					if AdminTable.objects.filter(id = classParts.author.id).exists():
+						tmpAdmin = AdminTable.objects.get(id = classParts.author.id)
+						
+						if isAdmin(classParts.author):
+							tmpAdmin.convoCount += 1
+							if (isUser(classConvo.parts[index-1].author)):
+								admin_response = classParts.created_at
+								delta = admin_response - user_response
+								if delta < 500:
+									tmpAdmin.averageResponseSum += delta
+									tmpAdmin.realCount += 1
+									saveMedian(tmpAdmin, admin_response, user_response)
+							
+									if first_add:
+										tmpAdmin.firstResponseSum += delta
+										tmpAdmin.firstCount += 1
+										first_add = False
+						tmpAdmin.save()
 				else:
-					print("no admin")
-							# admin_count[classParts.author.id].average_rt = admin_count[classParts.author.id].average_time / admin_count[classParts.author.id].average_count
-							# admin_count[classParts.author.id].array.sort()
-
-
-						# if ((len(admin_count[classParts.author.id].array))%2 == 1):
-						# 	admin_count[classParts.author.id].median_rt = admin_count[classParts.author.id].array[int((len(admin_count[classParts.author.id].array)+1)/2)]
-						# else:
-						# 	admin_count[classParts.author.id].median_rt = admin_count[classParts.author.id].array[int(len(admin_count[classParts.author.id].array)/2)]
-				
-		return True
-
-
-	# while True:
-	# 	try:
-	# 		send = str(input("Do you want to send email?: [yes/no] "))
-	# 		if send == "yes":
-	# 			recipient = str(input("Enter Recipient: "))
-	# 			send_email(body=send_response(), recipient=recipient, crawl_size = crawl_size, file_name= os.path.basename(__file__)[:-3])
-	# 		else:
-	# 			break
-	# 	except ValueError:
-	# 		print(ValueError)
+					print("__Deleted Admin__")
 
 
 
-
-	print("________%s seconds _______" %(time.time() - python_start))
 
 
 

@@ -4,6 +4,7 @@ import datetime
 import inspect
 from bs4 import BeautifulSoup
 import os
+import statistics
 from response_time.models import AdminTable, usedConvo, medianTable
 
 
@@ -204,21 +205,17 @@ def send_response(dict):
 
 def export():
 	for admin in AdminTable.objects.all():
-		if admin.realCount !=0 and admin.firstCount != 0:
-			print(admin)
-			admin.firstResponse = admin.firstResponseSum / admin.firstCount
+		# average response time
+		if admin.realCount != 0:
 			admin.averageResponse = admin.averageResponseSum / admin.realCount
-			
-			ls =[] 
-			for convo in medianTable.objects.filter(adminLink = admin.id):
-				ls.append(convo.responseTime)
-			ls.sort()
-			if len(ls)%2 == 1:
-				median = ls[int((len(ls)+1)/2)]
-			else:
-				median = ls[int(len(ls)/2)]
-			admin.medianResponse = median
-			admin.save()
+		# first response time 
+		if admin.firstCount != 0:
+			admin.firstResponse = admin.firstResponseSum / admin.firstCount
+		# median response time
+		ls = [convo.responseTime for convo in medianTable.objects.filter(adminLink = admin.id)]
+		if len(ls)!=0:
+			admin.medianResponse = statistics.median(ls)
+		admin.save()
 
 
 

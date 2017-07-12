@@ -1,5 +1,5 @@
 
-{% extends 'response_time/src/base.html' %}
+{% extends 'response_time/src/etc/base.html' %}
 {% load staticfiles%}
 {% block content %}
 
@@ -9,7 +9,7 @@
 $(function () { 
     var myChart = Highcharts.chart('rtchart1', {
         chart: { type: 'column' },
-        title: { text: 'Respones Count by Team' },
+        title: { text: 'Respones Count by Teammate' },
         colors: ['#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce', '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a'], 
         xAxis: { categories: ['convoCount', 'realCount', 'firstCount'] },
         yAxis: { title: { text: 'Response Count' } },
@@ -24,7 +24,7 @@ $(function () {
     var myChart = Highcharts.chart('rtchart2', {
         chart: { type: 'column' },
                 colors: ['#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce', '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a'], 
-        title: { text: 'Response Time by Team' },
+        title: { text: 'Response Time by Teammate' },
         xAxis: { categories: ['firstResponse', 'averageResponse', 'medianResponse'] },
         yAxis: { title: { text: 'Response Time/ Seconds' } },
         series: [ {% for key, item in adminObject %}

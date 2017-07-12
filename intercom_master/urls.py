@@ -22,6 +22,12 @@ urlpatterns = [
     url(r'^$', views.root, name="root"),
     
     url(r'^response_time/team$', views.response_team, name="rt_team"),
+
+    url(r'^response_time/team/CleanerCare$', views.response_CleanerCare, name="rt_CleanerCare"),
+    url(r'^response_time/team/CustomerSales$', views.response_CustomerSales, name="rt_CustomerSales"),
+    url(r'^response_time/team/CustomerSupport$', views.response_CustomerSupport, name="rt_CustomerSupport"),
+    url(r'^response_time/team/Telecommuting$', views.response_Telecommuting, name="rt_Telecommuting"),
+
     url(r'^response_time/teammate$', views.response_teammate, name="rt_teammate"),
     url(r'^response_time/weekly$', views.response_weekly, name="rt_weekly"),
 

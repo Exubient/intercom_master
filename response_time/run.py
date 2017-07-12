@@ -5,3 +5,4 @@ from algo.root import *
 def response():
 	run_response(10)
 	export()
+	team_export()

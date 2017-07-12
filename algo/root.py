@@ -5,7 +5,7 @@ import inspect
 from bs4 import BeautifulSoup
 import os
 import statistics
-from response_time.models import AdminTable, usedConvo, medianTable
+from response_time.models import AdminTable, usedConvo, medianTable, TeamTable
 
 
 ####################################################
@@ -169,7 +169,7 @@ class Date():
 		self.hour = int(data[11:13])
 		self.minute = int(data[14:16])
 
-
+# function that calculates the actual response time from the sum and count
 def export():
 	for admin in AdminTable.objects.all():
 		# average response time
@@ -183,6 +183,31 @@ def export():
 		if len(ls)!=0:
 			admin.medianResponse = statistics.median(ls)
 		admin.save()
+
+def team_export():
+	for team in TeamTable.objects.all():
+		for admin in AdminTable.objects.all():
+			if str(admin.teamLink) == str(team.teamName):
+				team.convoCount += admin.convoCount
+				team.realCount += admin.realCount
+				team.averageResponseSum += admin.averageResponseSum
+				team.firstCount += admin.firstCount
+				team.firstResponseSum += admin.firstResponseSum
+				team.save()
+		if team.realCount != 0:
+			team.averageResponse = team.averageResponseSum / team.realCount
+		# first response time 
+		if team.firstCount != 0:
+			team.firstResponse = team.firstResponseSum / team.firstCount
+		team.save()
+
+
+		# if admin.realCount != 0:
+
+		# 	admin.averageResponse = admin.averageResponseSum / admin.realCount
+
+		# if admin.firstCount != 0:
+		# 	admin.firstResponse = admin.firstResponseSum / admin.firstCount
 
 def reset():
 	for admin in AdminTable.objects.all():

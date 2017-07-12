@@ -2,6 +2,24 @@ from django.db import models
 
 # Create your models here.
 
+class TeamTable(models.Model):
+	id = models.CharField(max_length=10, primary_key = True)
+	teamName = models.CharField(max_length= 20)
+
+	convoCount = models.IntegerField(default = 0)
+
+	realCount = models.IntegerField(default = 0)
+	averageResponseSum = models.IntegerField(default = 0)
+
+	firstCount = models.IntegerField(default =0)
+	firstResponseSum = models.IntegerField(default = 0)
+
+	firstResponse = models.IntegerField(default=0)
+	averageResponse = models.IntegerField(default=0)
+
+	def __str__(self):
+		return self.teamName
+
 class AdminTable(models.Model):
 	id = models.CharField(max_length=30, primary_key = True)
 	adminName = models.CharField(max_length=30)
@@ -14,11 +32,10 @@ class AdminTable(models.Model):
 	firstCount = models.IntegerField(default =0)
 	firstResponseSum = models.IntegerField(default = 0)
 
-	medianResponseSum = models.IntegerField(default = 0)
-
 	firstResponse = models.IntegerField(default=0)
 	averageResponse = models.IntegerField(default=0)
 	medianResponse = models.IntegerField(default=0)
+	teamLink = models.ForeignKey(TeamTable, on_delete=models.CASCADE, null=True)
 
 	def __str__(self):
 		return self.adminName

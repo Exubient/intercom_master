@@ -13,7 +13,11 @@ from algo.new_user import run_start
 
 
 def root(request):
-	return render(request, 'response_time/src/root.html', {})
+	if request.method =="GET":
+		return render(request, 'response_time/src/root.html', {})
+	elif request.method == "POST":
+		reset()
+		return render(request, 'response_time/src/root.html', {})
 
 def response_team(request):
 	if request.method =="GET":
@@ -26,8 +30,6 @@ def response_team(request):
 			})
 
 	elif request.method == "POST":
-		run_response(10)
-		export()
 		adminObject={}
 		for admin in AdminTable.objects.filter(~Q(firstCount=0)).filter(~Q(realCount=0)):
 			adminObject[admin.adminName] = [admin.convoCount, admin.realCount, admin.firstCount, admin.firstResponse, admin.averageResponse, admin.medianResponse]

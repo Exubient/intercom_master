@@ -168,40 +168,6 @@ class Date():
 		self.hour = int(data[11:13])
 		self.minute = int(data[14:16])
 
-####################################################
-
-# def name(data, admin_count):
-# 	try:
-# 		if isUser(data):
-# 			return "SOME USER"
-# 		elif isAdmin(data):
-# 			return admin_count[data.id].name
-# 	except:
-# 			return "NAME ERROR"
-
-def send_response(dict):
-	text=""	
-	for key, item in dict.items():
-		if (item.average_rt != 0):
-			if ((len(item.array)/2)%2 == 1):
-				text += "\nADMIN ID: " + str(key) + \
-					"\nADMIN NAME: " + str(item.name) + \
-					"\nALL CONVO COUNT: " + str(item.convo_count) + \
-					"\nREAL CONVO COUNT: " + str(item.average_count) +\
-					"\nFIRST RESPONSE TIME: " + str(item.first_rt) + \
-					"\nAVERAGE RESPONSE TIME: " + str(item.average_rt) + \
-					"\nMEDIAN RESPONSE TIME: " + str(item.array[int((len(item.array)-1)/2)]) + \
-					"\n____________________\n"
-			else:
-				text += "\nADMIN ID: " + str(key) + \
-					"\nADMIN NAME: " + str(item.name) + \
-					"\nALL CONVO COUNT: " + str(item.convo_count) + \
-					"\nREAL CONVO COUNT: " + str(item.average_count) +\
-					"\nFIRST RESPONSE TIME: " + str(item.first_rt) + \
-					"\nAVERAGE RESPONSE TIME: " + str(item.average_rt) + \
-					"\nMEDIAN RESPONSE TIME: " + str(item.array[int(len(item.array)/2)]) + \
-					"\n____________________\n"
-	return text
 
 def export():
 	for admin in AdminTable.objects.all():
@@ -216,6 +182,24 @@ def export():
 		if len(ls)!=0:
 			admin.medianResponse = statistics.median(ls)
 		admin.save()
+
+def reset():
+	for admin in AdminTable.objects.all():
+		admin.convoCount = 0
+		admin.realCount = 0
+		admin.firstCount = 0
+
+		admin.averageResponseSum = 0
+		admin.firstResponseSum = 0
+		admin.firstResponse = 0
+		admin.averageResponse = 0
+		admin.medianResponse = 0
+	for convo in usedConvo.objects.all():
+		convo.delete()
+		admin.save()
+	for median in medianTable.objects.all():
+		median.delete()
+		median.save()
 
 
 

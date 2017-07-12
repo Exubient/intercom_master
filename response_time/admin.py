@@ -11,7 +11,7 @@ class UnitInline(admin.TabularInline):
     model = AdminTable
 
 class _AdminTable(admin.ModelAdmin):
-    list_display = ['adminName', "convoCount", "realCount", "averageResponseSum", "averageResponse", "firstCount", "firstResponseSum", "firstResponse", "medianResponse"]
+    list_display = ['adminName', "teamLink", "convoCount", "realCount", "averageResponseSum", "averageResponse", "firstCount", "firstResponseSum", "firstResponse", "medianResponse"]
 
 class _TeamTable(admin.ModelAdmin):
 	list_display = ['id', 'teamName', 'convoCount', 'realCount', 'averageResponseSum', 'firstCount', 'firstResponseSum', 'firstResponse', 'averageResponse']

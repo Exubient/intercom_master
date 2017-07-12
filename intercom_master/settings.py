@@ -27,7 +27,7 @@ SECRET_KEY = '_-cydu36*3=_s$@b14*e6-4(3o3-ev8*@mo8**w3i*ruo)3i-4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 
 # Application definition
@@ -82,20 +82,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'intercom_master.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'intercom',
-        'USER': 'henry',
-        'PASSWORD': 'henry6311',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators

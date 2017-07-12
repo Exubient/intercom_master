@@ -11,8 +11,8 @@ $(function () {
         chart: { type: 'column' },
         title: { text: 'Respones Count by Team' },
         colors: ['#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce', '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a'], 
-        xAxis: { categories: ['convoCount', 'realCount', 'firstCount'] },
-        yAxis: { title: { text: 'Response Count' } },
+        xAxis: { categories: ['총 메세지 수', '총 응답 수', '첫 응답 수'] },
+        yAxis: { title: { text: '메세지 수' } },
 
         series: [ {% for key, item in adminObject %}
             		{ name: "{{key}}", data: [{{item.0}}, {{item.1}}, {{item.2}}] }, 
@@ -25,7 +25,7 @@ $(function () {
         chart: { type: 'column' },
                 colors: ['#2f7ed8', '#0d233a', '#8bbc21', '#910000', '#1aadce', '#492970', '#f28f43', '#77a1e5', '#c42525', '#a6c96a'], 
         title: { text: 'Response Time by Team' },
-        xAxis: { categories: ['firstResponse', 'averageResponse', 'medianResponse'] },
+        xAxis: { categories: ['첫 응답 속도', '응답 속도 평균', '응답 속도 중앙값'] },
         yAxis: { title: { text: 'Response Time/ Seconds' } },
         series: [ {% for key, item in adminObject %}
                     { name: "{{key}}", data: [{{item.3}}, {{item.4}}, {{item.5}}] }, 

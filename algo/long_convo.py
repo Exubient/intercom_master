@@ -1,4 +1,4 @@
-from root import *
+from algo.root import *
 
 
 def run_long(crawl_size, show_num):

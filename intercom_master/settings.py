@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -37,8 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'response_time'
+    'response_time',
+    'django_crontab',
+
 ]
+
+CRONJOBS = [
+    ('*/1 * * * *', 'response_time.run.run'),
+]
+
+
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -128,3 +138,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+

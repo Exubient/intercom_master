@@ -2,4 +2,4 @@
 Django web for intercom data analysis
 
 
-pip install django-celery
+pip3 install django-celery

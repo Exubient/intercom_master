@@ -1,6 +1,6 @@
-from root import *
+from algo.root import *
 from response_time.models import AdminTable, usedConvo, medianTable
-
+	
 def name(data):
 	if isUser(data):
 		return "User"

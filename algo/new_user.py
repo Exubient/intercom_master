@@ -1,4 +1,4 @@
-from root import *
+from algo.root import *
 
 def run_start(crawl_size):
 	####################################

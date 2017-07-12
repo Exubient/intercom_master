@@ -5,11 +5,12 @@ from django.db.models import Q
 from response_time.models import AdminTable
 from response_time.models import medianTable
 
-from root import *
-from time_response import run_response
-from long_convo import run_long
-from start_time import run_start
-from new_user import run_start
+from algo.root import *
+from algo.time_response import run_response
+from algo.long_convo import run_long
+from algo.start_time import run_start
+from algo.new_user import run_start
+
 
 def root(request):
 	return render(request, 'response_time/src/root.html', {})
@@ -25,7 +26,7 @@ def response_team(request):
 			})
 
 	elif request.method == "POST":
-		run_response(1)
+		run_response(10)
 		export()
 		adminObject={}
 		for admin in AdminTable.objects.filter(~Q(firstCount=0)).filter(~Q(realCount=0)):

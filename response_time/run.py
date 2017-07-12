@@ -1,7 +1,7 @@
 from algo.time_response import run_response
-from algo.root import root
-# from root import *
+from algo.root import *
 
-def run():
+
+def response():
 	run_response(10)
 	export()

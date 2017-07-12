@@ -45,7 +45,7 @@ INSTALLED_APPS = [
 ]
 
 CRONJOBS = [
-    ('*/1 * * * *', 'response_time.run.run'),
+    ('*/1 * * * *', 'response_time.run.response'),
 ]
 
 

@@ -134,6 +134,7 @@ class LongConvo_part():
 			self.body = BeautifulSoup(body, "html5lib").get_text()
 		else:
 			self.body = "NONE"
+
 class Admin():
 	def __init__(self, name, first_time, first_count, first_rt, array, average_time, average_count, average_rt, convo_count, median_rt):
 		self.name = name

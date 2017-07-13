@@ -186,6 +186,14 @@ def export():
 
 def team_export():
 	for team in TeamTable.objects.all():
+		team.convoCount = 0
+		team.realCount = 0
+		team.averageResponseSum = 0
+		team.firstCount = 0
+		team.firstResponseSum = 0
+		team.averageResponse = 0
+		team.firstResponse = 0
+
 		for admin in AdminTable.objects.all():
 			if str(admin.teamLink) == str(team.teamName):
 				team.convoCount += admin.convoCount
@@ -193,7 +201,6 @@ def team_export():
 				team.averageResponseSum += admin.averageResponseSum
 				team.firstCount += admin.firstCount
 				team.firstResponseSum += admin.firstResponseSum
-				team.save()
 		if team.realCount != 0:
 			team.averageResponse = team.averageResponseSum / team.realCount
 		# first response time 

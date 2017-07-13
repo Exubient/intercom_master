@@ -15,7 +15,7 @@ import os
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = dirname(dirname(dirname(os.path.abspath(__file__))))
+BASE_DIR = dirname(dirname(dirname(abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -26,7 +26,7 @@ SECRET_KEY = '_-cydu36*3=_s$@b14*e6-4(3o3-ev8*@mo8**w3i*ruo)3i-4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -132,7 +132,7 @@ STATICFILES_DIRS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -146,5 +146,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'intercom_master', 'static'),
+]
 
 

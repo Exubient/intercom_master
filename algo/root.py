@@ -13,7 +13,7 @@ python_start=time.time()
 localtime = 32400
 day = 86400
 NoneType = type(None)	
-intercom = Client(personal_access_token='dG9rOjQ2NjNjNzhhXzBkYjFfNDBjMF9iYWYyXzI3YjVhOTVmMzUyMToxOjA=')
+intercom = os.environ['INTERCOM']
 convo_tmp = intercom.conversations.find(id="10512241549")
 
 ####################################################
